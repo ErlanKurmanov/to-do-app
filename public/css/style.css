@@ -1,0 +1,66 @@
+.header {
+  display: flex;
+  align-items: center; /* aligns logo and text vertically in center */
+}
+
+
+body { 
+  margin: auto;
+  
+
+}
+
+
+.app-container {
+  display: grid;
+  grid-template-columns: 25% 75%;
+  width: 100%;
+}
+
+.sidebar {
+  background: #f0f0f0;
+  padding: 20px;
+  grid-column: 1;
+}
+
+.content {
+  padding: 20px;
+  margin: auto;
+  width: 70%;
+}
+
+
+/* Buttons */
+.btn-create {
+  background-color: #41ae41;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 5px;
+  
+  display: block;
+  margin-bottom: 10px;
+}
+
+.btn-create-list {
+  background-color: #56af4c;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 5px;
+
+  display: block;
+  margin-bottom: 10px;
+}
+
+
+
+
+
+

@@ -33,18 +33,35 @@
         </aside>
         
         <main class="content">
-            <div class="task">
-                <h1 class="title">Title of task</h1>
-                <p class="description">This is the body of content area.</p>
-            </div>
-            <div class="task">
-                <h1 class="title">Title of task</h1>
-                <p class="description">This is the body of content area.</p>
-            </div>
-            <div class="task">
-                <h1 class="title">Title of task</h1>
-                <p class="description">This is the body of content area.</p>
-            </div>
+            <!-- showing tasks -->
+            <x-task-item />
+
         </main>
+
+        <!-- create task modal -->
+        <div class="modal" id="createTaskModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Create New Task</h2>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <form action="/tasks" method="POST" id="createTaskForm">
+                    @csrf
+                    <div class="form-group">
+                        <label for="taskTitle">Title</label>
+                        <input type="text" id="taskTitle" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDescription">Description</label>
+                        <textarea id="taskDescription" name="description" rows="4"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-discard">Discard</button>
+                        <button type="submit" class="btn-save">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
     </div>
 </x-layout>

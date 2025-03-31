@@ -16,5 +16,6 @@
         </div>
     </header>
         {{ $slot }}
+    <script src="/js/app.js"></script>
 </body>
 </html>

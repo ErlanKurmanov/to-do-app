@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Task extends Model
 {
@@ -10,4 +11,9 @@ class Task extends Model
         'title',
         'description',
     ];
+
+    public function list(): BelongsTo
+    {
+        return $this->belongsTo(TaskList::class, 'list_id');
+    }
 }

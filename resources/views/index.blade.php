@@ -38,6 +38,13 @@
 
         </main>
 
+        <!-- Success Message -->
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
+
         <!-- create task modal -->
         <div class="modal" id="createTaskModal">
             <div class="modal-content">

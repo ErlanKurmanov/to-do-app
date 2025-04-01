@@ -37,6 +37,8 @@ class TaskController extends Controller
             'title' => $request->title,
             'description' => $request->description,
         ]);
+
+        return redirect()->back()->with('success', 'To-Do Created Successfully!');
     }
 
     /**
@@ -44,7 +46,9 @@ class TaskController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $tasks = Task::all();
+        
+        return view('tasks.index', ['tasks' => $tasks]);
     }
 
     /**

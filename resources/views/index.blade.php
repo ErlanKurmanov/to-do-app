@@ -1,4 +1,4 @@
-<x-layout>    
+<x-layout>
     <div class="app-container">
         <aside class="sidebar">
             <div class="sidebar-actions">
@@ -27,7 +27,6 @@
                             personal
                         </label>
                     </li>
-                    
                 </ul>
             </nav>
         </aside>
@@ -38,7 +37,7 @@
             @foreach ($tasks as $task)
                 <x-task-item :$task/>
             @endforeach
-            
+
 
         </main>
 
@@ -48,6 +47,27 @@
             {{ session('success') }}
         </div>
         @endif
+
+        
+        <div class="modal" id="createListModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Create New List</h2>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <form action="#" method="POST" id="createListForm">
+                    @csrf
+                    <div class="form-group">
+                        <label for="listName">List Name</label>
+                        <input type="text" id="listName" name="name" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-discard">Discard</button>
+                        <button type="submit" class="btn-save">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <!-- create task modal -->
         <div class="modal" id="createTaskModal">
@@ -70,7 +90,7 @@
                         <label for="taskList">Choose a category of task:</label>
                         <select name="list_id" required>
                             @foreach($tasklists as $tasklist)
-                                <option value="{{ $tasklist->id }}">{{ $tasklist->name }}</option>
+                                <option value="{{ $tasklist->id }}"> {{ $tasklist->name }} </option>
                             @endforeach
                         </select>
                     </div>

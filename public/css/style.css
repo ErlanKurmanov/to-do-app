@@ -62,7 +62,7 @@ body {
 
 
 
-/* Modal styles */
+                       /* Modal styles */
 .modal {
   display: none;
   position: fixed;
@@ -144,15 +144,8 @@ body {
 
 
 
-/* Task items style */
-    /* General reset and body styles */
-    /* * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    } */
-    
+                  /* Task items style */
+   
     .main {
       display: flex;
       justify-content: center;

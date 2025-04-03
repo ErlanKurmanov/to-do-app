@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use App\Models\TaskList;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,9 @@ class TaskListController extends Controller
     public function index()
     {
         $tasklists = TaskList::all();
-        $tasks = TaskList::all();
+        $tasks = Task::all();
+
+//        dd($tasks);
         return view('index', ['tasklists' => $tasklists, 'tasks' => $tasks]);
     }
 

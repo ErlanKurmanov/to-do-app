@@ -8,5 +8,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [TaskListController::class, 'index']);
 Route::resource('tasks', TaskController::class);
 
-Route::post('/lists', [TaskListController::class, 'store'])->name('tasks.store');
+//This method for retrieving data with js ajax:
+Route::get('/tasks/list/{listId?}', [App\Http\Controllers\TaskListController::class, 'getTasks'])->name('tasks.byList');
+
+//dd(route('lists.store'));
+Route::post('/lists', [TaskListController::class, 'store'])->name('lists.store');
 

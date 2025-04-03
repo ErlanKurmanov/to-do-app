@@ -1,5 +1,6 @@
 @props(['task'])
 <div class="task-item">
+    
     <div class="checkbox-container">
       <div class="custom-checkbox" id="task-checkbox"></div>
     </div>

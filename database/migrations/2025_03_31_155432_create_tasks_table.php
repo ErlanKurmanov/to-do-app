@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('list_id')->constrained('lists')->onDelete('cascade');
             $table->string('title');
             $table->text('description');
+            $table->boolean('completed')->default(false);
             $table->timestamps();
         });
 

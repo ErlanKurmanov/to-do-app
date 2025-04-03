@@ -9,24 +9,35 @@
             <nav class="sidebar-lists">
                 <h2>Lists</h2>
                 <ul>
+                    <li class="list-item">
+                        <label class="list-name">
+                            <input type="radio" name="list" value="all" checked>
+                            All Tasks
+                        </label>
+                    </li>
                     @foreach($tasklists as $tasklist)
                         <li class="list-item">
                             <label class="list-name">
-                                <input type="radio" name="list">
+                                <input type="radio" name="list" value="{{ $tasklist->id }}">
                                 {{ $tasklist->name }}
                             </label>
                         </li>
                     @endforeach
                 </ul>
             </nav>
+
+
+
         </aside>
 
 
         <!-- Tasks section -->
         <main class="content">
-            @foreach ($tasks as $task)
-                <x-task-item :$task/>
-            @endforeach
+            <div id="tasks-container">
+                @foreach ($tasks as $task)
+                    <x-task-item :$task/>
+                @endforeach
+            </div>
         </main>
 
         <!-- Success Message -->
@@ -43,7 +54,7 @@
                     <h2>Create New List</h2>
                     <span class="close-modal">&times;</span>
                 </div>
-                <form action="{{ route('tasks.store') }}" method="POST" id="createListForm">
+                <form action="{{ route('lists.store') }}" method="POST" id="createListForm">
                     @csrf
                     <div class="form-group">
                         <label for="listName">List Name</label>
@@ -56,6 +67,7 @@
                 </form>
             </div>
         </div>
+
 
         <!-- create task modal -->
         <div class="modal" id="createTaskModal">

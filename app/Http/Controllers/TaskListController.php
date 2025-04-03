@@ -27,4 +27,17 @@ class TaskListController extends Controller
 
         return redirect()->back()->with('success', 'Task list created successfully!');
     }
+
+    public function getTasks($listId = null)
+    {
+        if ($listId === 'all') {
+            $tasks = Task::all();
+        } else {
+            $tasks = Task::where('list_id', $listId)->get();
+        }
+
+        return response()->json([
+            'tasks' => $tasks
+        ]);
+    }
 }

@@ -1,5 +1,6 @@
 
 //  -------- Modal for creating a new task ---------
+
 document.addEventListener('DOMContentLoaded', function() {
   // Task Modal Elements
   const taskModal = document.getElementById('createTaskModal');
@@ -58,14 +59,83 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+// --------- List filtering functionality -----------
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all radio buttons for lists
+    const listRadios = document.querySelectorAll('input[name="list"]');
+    const tasksContainer = document.getElementById('tasks-container');
+    
+    // Add event listener to each radio button
+    listRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            const listId = this.value;
+            fetchTasks(listId);
+        });
+    });
+    
+    // Function to fetch tasks by list ID
+    function fetchTasks(listId) {
+        fetch(`/tasks/list/${listId}`)
+            .then(response => response.json())
+            .then(data => {
+                updateTasksDisplay(data.tasks);
+            })
+            .catch(error => {
+                console.error('Error fetching tasks:', error);
+            });
+    }
+    
+    // Function to update the tasks display
+    function updateTasksDisplay(tasks) {
+        // Clear current tasks
+        tasksContainer.innerHTML = '';
+        
+        // If no tasks, show a message
+        if (tasks.length === 0) {
+            tasksContainer.innerHTML = '<p>No tasks in this list</p>';
+            return;
+        }
+        
+        // Create and append task items
+        tasks.forEach(task => {
+            const taskItem = createTaskItem(task);
+            tasksContainer.appendChild(taskItem);
+        });
+    }
+    
+    // Function to create a task item element
+    function createTaskItem(task) {
+        const taskItem = document.createElement('div');
+        taskItem.className = 'task-item';
+        taskItem.innerHTML = `
+            <div class="checkbox-container">
+                <div class="custom-checkbox" id="task-checkbox"></div>
+            </div>
+            
+            <div class="task-content">
+                <h1 class="title">${task.title}</h1>
+                <p class="description">${task.description}</p>
+            </div>
+            
+            <div class="actions">
+                <button class="btn btn-edit">Edit</button>
+                <button class="btn btn-delete">Delete</button>
+            </div>
+        `;
+        return taskItem;
+    }
+});
 
 
 
 
 // -----------------Task item functionality----------------
+
 document.addEventListener('DOMContentLoaded', function() {
   // Task item functionality - use event delegation for dynamically created elements
   document.addEventListener('click', function(e) {
+    
       // Handle checkboxes
       if (e.target.closest('.custom-checkbox')) {
           const checkbox = e.target.closest('.custom-checkbox');

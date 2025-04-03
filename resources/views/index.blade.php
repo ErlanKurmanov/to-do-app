@@ -9,24 +9,14 @@
             <nav class="sidebar-lists">
                 <h2>Lists</h2>
                 <ul>
-                    <li class="list-item">
-                        <label class="list-name">
-                            <input type="radio" name="list">
-                            work
-                        </label>
-                    </li>
-                    <li class="list-item">
-                        <label class="list-name">
-                            <input type="radio" name="list">
-                            grocaries
-                        </label>
-                    </li>
-                    <li class="list-item">
-                        <label class="list-name">
-                            <input type="radio" name="list">
-                            personal
-                        </label>
-                    </li>
+                    @foreach($tasklists as $tasklist)
+                        <li class="list-item">
+                            <label class="list-name">
+                                <input type="radio" name="list">
+                                {{ $tasklist->name }}
+                            </label>
+                        </li>
+                    @endforeach
                 </ul>
             </nav>
         </aside>
@@ -37,8 +27,6 @@
             @foreach ($tasks as $task)
                 <x-task-item :$task/>
             @endforeach
-
-
         </main>
 
         <!-- Success Message -->
@@ -48,14 +36,14 @@
         </div>
         @endif
 
-        
+
         <div class="modal" id="createListModal">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2>Create New List</h2>
                     <span class="close-modal">&times;</span>
                 </div>
-                <form action="#" method="POST" id="createListForm">
+                <form action="{{ route('tasks.store') }}" method="POST" id="createListForm">
                     @csrf
                     <div class="form-group">
                         <label for="listName">List Name</label>

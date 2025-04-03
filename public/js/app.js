@@ -1,35 +1,59 @@
 
 //  -------- Modal for creating a new task ---------
 document.addEventListener('DOMContentLoaded', function() {
-    // Get modal elements
-    const modal = document.getElementById('createTaskModal');
-    const createBtn = document.querySelector('.btn-create');
-    const closeBtn = document.querySelector('.close-modal');
-    const discardBtn = document.querySelector('.btn-discard');
-    
-    // Open modal when Create button is clicked
-    createBtn.addEventListener('click', function() {
-        modal.style.display = 'block';
-    });
-    
-    // Close modal functions
-    function closeModal() {
-        modal.style.display = 'none';
-        document.getElementById('createTaskForm').reset();
-    }
-    
-    // Close modal when X is clicked
-    closeBtn.addEventListener('click', closeModal);
-    
-    // Close modal when Discard button is clicked
-    discardBtn.addEventListener('click', closeModal);
-    
-    // Close modal when clicking outside of it
-    window.addEventListener('click', function(event) {
-        if (event.target === modal) {
-            closeModal();
-        }
-    });
+  // Task Modal Elements
+  const taskModal = document.getElementById('createTaskModal');
+  const createTaskBtn = document.querySelector('.btn-create');
+  const closeTaskBtn = document.querySelector('#createTaskModal .close-modal');
+  const discardTaskBtn = document.querySelector('#createTaskModal .btn-discard');
+  
+  // List Modal Elements
+  const listModal = document.getElementById('createListModal');
+  const createListBtn = document.querySelector('.btn-create-list');
+  const closeListBtn = document.querySelector('#createListModal .close-modal');
+  const discardListBtn = document.querySelector('#createListModal .btn-discard');
+  
+  // Open Task Modal
+  if (createTaskBtn) {
+      createTaskBtn.addEventListener('click', function() {
+          taskModal.style.display = 'block';
+      });
+  }
+  
+  // Open List Modal
+  if (createListBtn) {
+      createListBtn.addEventListener('click', function() {
+          listModal.style.display = 'block';
+      });
+  }
+  
+  // Close Task Modal functions
+  function closeTaskModal() {
+      taskModal.style.display = 'none';
+      document.getElementById('createTaskForm').reset();
+  }
+  
+  // Close List Modal functions
+  function closeListModal() {
+      listModal.style.display = 'none';
+      document.getElementById('createListForm').reset();
+  }
+  
+  // Close buttons event listeners
+  if (closeTaskBtn) closeTaskBtn.addEventListener('click', closeTaskModal);
+  if (discardTaskBtn) discardTaskBtn.addEventListener('click', closeTaskModal);
+  if (closeListBtn) closeListBtn.addEventListener('click', closeListModal);
+  if (discardListBtn) discardListBtn.addEventListener('click', closeListModal);
+  
+  // Close modals when clicking outside
+  window.addEventListener('click', function(event) {
+      if (event.target === taskModal) {
+          closeTaskModal();
+      }
+      if (event.target === listModal) {
+          closeListModal();
+      }
+  });
 });
 
 
@@ -39,29 +63,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // -----------------Task item functionality----------------
- // Toggle checkbox state
- const checkbox = document.getElementById('task-checkbox');
- const taskItem = document.querySelector('.task-item');
- const content = document.querySelector('.content');
- 
- checkbox.addEventListener('click', function() {
-   this.classList.toggle('checked');
-   content.classList.toggle('checked-task');
- });
- 
- // Edit button functionality (simple alert for demonstration)
- const editBtn = document.querySelector('.btn-edit');
- editBtn.addEventListener('click', function() {
-   alert('Edit functionality would open here');
- });
- 
- // Delete button functionality (simple animation for demonstration)
- const deleteBtn = document.querySelector('.btn-delete');
- deleteBtn.addEventListener('click', function() {
-   taskItem.style.opacity = '0';
-   setTimeout(() => {
-     alert('Task would be deleted from database');
-     taskItem.style.opacity = '1';
-   }, 300);
- });
+document.addEventListener('DOMContentLoaded', function() {
+  // Task item functionality - use event delegation for dynamically created elements
+  document.addEventListener('click', function(e) {
+      // Handle checkboxes
+      if (e.target.closest('.custom-checkbox')) {
+          const checkbox = e.target.closest('.custom-checkbox');
+          const taskItem = checkbox.closest('.task-item');
+          const content = taskItem.querySelector('.task-content');
+          
+          checkbox.classList.toggle('checked');
+          content.classList.toggle('checked-task');
+      }
+      
+      // Handle edit buttons
+      if (e.target.closest('.btn-edit')) {
+          alert('Edit functionality would open here');
+      }
+      
+      // Handle delete buttons
+      if (e.target.closest('.btn-delete')) {
+          const taskItem = e.target.closest('.task-item');
+          taskItem.style.opacity = '0';
+          setTimeout(() => {
+              alert('Task would be deleted from database');
+              taskItem.style.opacity = '1';
+          }, 300);
+      }
+  });
+});
 

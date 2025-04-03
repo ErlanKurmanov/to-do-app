@@ -1,3 +1,5 @@
+
+//  -------- Modal for creating a new task ---------
 document.addEventListener('DOMContentLoaded', function() {
     // Get modal elements
     const modal = document.getElementById('createTaskModal');
@@ -29,3 +31,37 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+
+
+
+
+
+
+// -----------------Task item functionality----------------
+ // Toggle checkbox state
+ const checkbox = document.getElementById('task-checkbox');
+ const taskItem = document.querySelector('.task-item');
+ const content = document.querySelector('.content');
+ 
+ checkbox.addEventListener('click', function() {
+   this.classList.toggle('checked');
+   content.classList.toggle('checked-task');
+ });
+ 
+ // Edit button functionality (simple alert for demonstration)
+ const editBtn = document.querySelector('.btn-edit');
+ editBtn.addEventListener('click', function() {
+   alert('Edit functionality would open here');
+ });
+ 
+ // Delete button functionality (simple animation for demonstration)
+ const deleteBtn = document.querySelector('.btn-delete');
+ deleteBtn.addEventListener('click', function() {
+   taskItem.style.opacity = '0';
+   setTimeout(() => {
+     alert('Task would be deleted from database');
+     taskItem.style.opacity = '1';
+   }, 300);
+ });
+

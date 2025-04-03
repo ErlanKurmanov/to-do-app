@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\TaskList;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -12,7 +13,6 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**
@@ -28,14 +28,18 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'list_id' => 'required|exists:lists,id',
         ]);
+
+//        dd($validated);
 
         Task::create([
             'title' => $request->title,
             'description' => $request->description,
+            'list_id' => $request->list_id,
         ]);
 
         return redirect()->back()->with('success', 'To-Do Created Successfully!');
@@ -46,9 +50,7 @@ class TaskController extends Controller
      */
     public function show(string $id)
     {
-        $tasks = Task::all();
-        
-        return view('tasks.index', ['tasks' => $tasks]);
+
     }
 
     /**

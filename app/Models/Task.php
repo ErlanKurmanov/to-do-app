@@ -10,6 +10,7 @@ class Task extends Model
     protected $fillable = [
         'title',
         'description',
+        'list_id',
     ];
 
     public function list(): BelongsTo

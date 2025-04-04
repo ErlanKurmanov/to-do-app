@@ -13,7 +13,6 @@ class TaskListController extends Controller
         $tasklists = TaskList::all();
         $tasks = Task::all();
 
-//        dd($tasks);
         return view('index', ['tasklists' => $tasklists, 'tasks' => $tasks]);
     }
 
@@ -28,7 +27,7 @@ class TaskListController extends Controller
         return redirect()->back()->with('success', 'Task list created successfully!');
     }
 
-    public function getTasks($listId = null)
+    public function getTasksById($listId = null)
     {
         if ($listId === 'all') {
             $tasks = Task::all();

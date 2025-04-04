@@ -59,6 +59,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
+
 // --------- List filtering functionality -----------
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -84,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => {
                 console.error('Error fetching tasks:', error);
             });
+            
     }
     
     // Function to update the tasks display
@@ -109,8 +112,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const taskItem = document.createElement('div');
         taskItem.className = 'task-item';
         taskItem.innerHTML = `
+        <div class="task-item" data-task-id="${task.id}">
             <div class="checkbox-container">
-                <div class="custom-checkbox" id="task-checkbox"></div>
+                <div class="custom-checkbox ${task.completed ? 'checked' : ''}" id="task-checkbox""></div>
             </div>
             
             <div class="task-content">
@@ -122,6 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <button class="btn btn-edit">Edit</button>
                 <button class="btn btn-delete">Delete</button>
             </div>
+        </div>
         `;
         return taskItem;
     }
@@ -131,35 +136,65 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // -----------------Task item functionality----------------
-
-document.addEventListener('DOMContentLoaded', function() {
-  // Task item functionality - use event delegation for dynamically created elements
-  document.addEventListener('click', function(e) {
+// Task item functionality - use event delegation for dynamically created elements
+document.addEventListener('click', function(e) {
+    // Handle checkboxes
+    if (e.target.closest('.custom-checkbox')) {
+        const checkbox = e.target.closest('.custom-checkbox');
+        const taskItem = checkbox.closest('.task-item');
+        const content = taskItem.querySelector('.task-content');
+        const taskId = taskItem.dataset.taskId;
+        
+        // Toggle visual state
+        checkbox.classList.toggle('checked');
+        content.classList.toggle('checked-task');
+        
+        // Get the new completed state (true if class is present)
+        const isCompleted = checkbox.classList.contains('checked');
+        
+        // Send AJAX request to update task status
+        fetch(`/tasks/${taskId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            //it converts the isCompleted value to JSON
+            body: JSON.stringify({
+                completed: isCompleted
+            })
+        })
+        //response is an object, .json() converts it to a json format
+        .then(response => response.json())
+        //data is an object
+        .then(data => {
+            if (!data.success) {
+                // Revert UI if update failed
+                checkbox.classList.toggle('checked');
+                content.classList.toggle('checked-task');
+                console.error('Failed to update task status:', data.message);
+            }
+        })
+        .catch(error => {
+            // Revert UI on error
+            checkbox.classList.toggle('checked');
+            content.classList.toggle('checked-task');
+            console.error('Error updating task status:', error);
+        });
+    }
     
-      // Handle checkboxes
-      if (e.target.closest('.custom-checkbox')) {
-          const checkbox = e.target.closest('.custom-checkbox');
-          const taskItem = checkbox.closest('.task-item');
-          const content = taskItem.querySelector('.task-content');
-          
-          checkbox.classList.toggle('checked');
-          content.classList.toggle('checked-task');
-      }
-      
-      // Handle edit buttons
-      if (e.target.closest('.btn-edit')) {
-          alert('Edit functionality would open here');
-      }
-      
-      // Handle delete buttons
-      if (e.target.closest('.btn-delete')) {
-          const taskItem = e.target.closest('.task-item');
-          taskItem.style.opacity = '0';
-          setTimeout(() => {
-              alert('Task would be deleted from database');
-              taskItem.style.opacity = '1';
-          }, 300);
-      }
-  });
+    // Handle edit buttons
+    if (e.target.closest('.btn-edit')) {
+        alert('Edit functionality would open here');
+    }
+    
+    // Handle delete buttons
+    if (e.target.closest('.btn-delete')) {
+        const taskItem = e.target.closest('.task-item');
+        taskItem.style.opacity = '0';
+        setTimeout(() => {
+            alert('Task would be deleted from database');
+            taskItem.style.opacity = '1';
+        }, 300);
+    }
 });
-

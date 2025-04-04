@@ -5,12 +5,17 @@ use App\Http\Controllers\TaskListController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', [TaskListController::class, 'index']);
+
 Route::resource('tasks', TaskController::class);
 
-//This method for retrieving data with js ajax:
-Route::get('/tasks/list/{listId?}', [App\Http\Controllers\TaskListController::class, 'getTasks'])->name('tasks.byList');
 
-//dd(route('lists.store'));
+//Retrieves all tasks and lists
+Route::get('/', [TaskListController::class, 'index']);
+
+//Retrieves tasks depending on the list:
+Route::get('/tasks/list/{listId?}', [App\Http\Controllers\TaskListController::class, 'getTasksById']);
+
+//Updating checkbox
 Route::post('/lists', [TaskListController::class, 'store'])->name('lists.store');
+
 

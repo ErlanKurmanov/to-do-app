@@ -66,8 +66,24 @@ class TaskController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        Task::find($id)->update([
+        $task = Task::find($id);
 
+        if ($request->has('completed')) {
+            $task->update([
+                'completed' => $request->completed
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Task status updated successfully!'
+            ]);
+        }
+
+        // Handle other update fields if needed
+
+        return response()->json([
+            'success' => false,
+            'message' => 'No changes were made'
         ]);
     }
 
@@ -78,4 +94,5 @@ class TaskController extends Controller
     {
         //
     }
+
 }

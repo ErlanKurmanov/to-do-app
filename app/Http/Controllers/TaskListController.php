@@ -39,4 +39,23 @@ class TaskListController extends Controller
             'tasks' => $tasks
         ]);
     }
+
+    public function showList($listId = null)
+    {
+        $tasklists = TaskList::all();
+
+        if ($listId) {
+            $tasks = Task::where('list_id', $listId)->get();
+            $currentList = TaskList::find($listId);
+        } else {
+            $tasks = Task::all();
+            $currentList = null;
+        }
+
+        return view('index', [
+            'tasklists' => $tasklists,
+            'tasks' => $tasks,
+            'currentList' => $currentList
+        ]);
+    }
 }

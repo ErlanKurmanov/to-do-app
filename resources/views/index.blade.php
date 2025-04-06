@@ -6,27 +6,24 @@
                 <button class="btn-create-list">Create new list</button>
             </div>
 
+            <!-- Sidebar -->
             <nav class="sidebar-lists">
                 <h2>Lists</h2>
                 <ul>
-                    <li class="list-item">
-                        <label class="list-name">
-                            <input type="radio" name="list" value="all" checked>
+                    <li class="list-item {{ !isset($currentList) ? 'active' : '' }}">
+                        <a href="{{ route('list.show') }}" class="list-name">
                             All Tasks
-                        </label>
+                        </a>
                     </li>
                     @foreach($tasklists as $tasklist)
-                        <li class="list-item">
-                            <label class="list-name">
-                                <input type="radio" name="list" value="{{ $tasklist->id }}">
+                        <li class="list-item {{ isset($currentList) && $currentList->id == $tasklist->id ? 'active' : '' }}">
+                            <a href="{{ route('list.show', $tasklist->id) }}" class="list-name">
                                 {{ $tasklist->name }}
-                            </label>
+                            </a>
                         </li>
                     @endforeach
                 </ul>
             </nav>
-
-
 
         </aside>
 
@@ -35,22 +32,7 @@
         <main class="content">
             <div id="tasks-container">
                 @foreach ($tasks as $task)
-                <div class="task-item" data-task-id="{{ $task->id }}">
-
-                    <div class="checkbox-container">
-                        <div class="custom-checkbox {{ $task->completed ? 'checked' : '' }}" id="task-checkbox"></div>
-                    </div>
-                
-                    <div class="task-content {{ $task->completed ? 'checked-task' : '' }}">
-                        <h1 class="title">{{ $task->title }}</h1>
-                        <p class="description">{{ $task->description }}</p>
-                    </div>
-                
-                    <div class="actions">
-                        <button class="btn btn-edit">Edit</button>
-                        <button class="btn btn-delete">Delete</button>
-                    </div>
-                </div>
+                    <x-task-item :task="$task" />
                 @endforeach
             </div>
         </main>
@@ -63,6 +45,7 @@
         @endif
 
 
+        <!-- create list modal -->
         <div class="modal" id="createListModal">
             <div class="modal-content">
                 <div class="modal-header">
@@ -91,7 +74,7 @@
                     <h2>Create New Task</h2>
                     <span class="close-modal">&times;</span>
                 </div>
-                <form action="{{ route('tasks.store') }}" method="POST" id="createTaskForm">
+                <form action="{{ route('task.store') }}" method="POST" id="createTaskForm">
                     @csrf
                     <div class="form-group">
                         <label for="taskTitle">Title</label>
@@ -116,6 +99,11 @@
                 </form>
             </div>
         </div>
+
+
+
+
+
 
     </div>
 </x-layout>

@@ -1,136 +1,92 @@
+ // -----------------Modal functionality----------------
+ document.addEventListener('DOMContentLoaded', function() {
+    // Task Modal Elements
+    const taskModal = document.getElementById('createTaskModal');
+    const createTaskBtn = document.querySelector('.btn-create');
+    const closeTaskBtn = document.querySelector('#createTaskModal .close-modal');
+    const discardTaskBtn = document.querySelector('#createTaskModal .btn-discard');
 
-//  -------- Modal for creating a new task ---------
+    // List Modal Elements
+    const listModal = document.getElementById('createListModal');
+    const createListBtn = document.querySelector('.btn-create-list');
+    const closeListBtn = document.querySelector('#createListModal .close-modal');
+    const discardListBtn = document.querySelector('#createListModal .btn-discard');
 
-document.addEventListener('DOMContentLoaded', function() {
-  // Task Modal Elements
-  const taskModal = document.getElementById('createTaskModal');
-  const createTaskBtn = document.querySelector('.btn-create');
-  const closeTaskBtn = document.querySelector('#createTaskModal .close-modal');
-  const discardTaskBtn = document.querySelector('#createTaskModal .btn-discard');
-  
-  // List Modal Elements
-  const listModal = document.getElementById('createListModal');
-  const createListBtn = document.querySelector('.btn-create-list');
-  const closeListBtn = document.querySelector('#createListModal .close-modal');
-  const discardListBtn = document.querySelector('#createListModal .btn-discard');
-  
-  // Open Task Modal
-  if (createTaskBtn) {
-      createTaskBtn.addEventListener('click', function() {
-          taskModal.style.display = 'block';
-      });
-  }
-  
-  // Open List Modal
-  if (createListBtn) {
-      createListBtn.addEventListener('click', function() {
-          listModal.style.display = 'block';
-      });
-  }
-  
-  // Close Task Modal functions
-  function closeTaskModal() {
-      taskModal.style.display = 'none';
-      document.getElementById('createTaskForm').reset();
-  }
-  
-  // Close List Modal functions
-  function closeListModal() {
-      listModal.style.display = 'none';
-      document.getElementById('createListForm').reset();
-  }
-  
-  // Close buttons event listeners
-  if (closeTaskBtn) closeTaskBtn.addEventListener('click', closeTaskModal);
-  if (discardTaskBtn) discardTaskBtn.addEventListener('click', closeTaskModal);
-  if (closeListBtn) closeListBtn.addEventListener('click', closeListModal);
-  if (discardListBtn) discardListBtn.addEventListener('click', closeListModal);
-  
-  // Close modals when clicking outside
-  window.addEventListener('click', function(event) {
-      if (event.target === taskModal) {
-          closeTaskModal();
-      }
-      if (event.target === listModal) {
-          closeListModal();
-      }
-  });
-});
+    // Edit Task Modal Elements
+    const editTaskModal = document.getElementById('editTaskModal');
+    const editTaskForm = document.getElementById('editTaskForm');
+    const closeEditTaskBtn = document.querySelector('#editTaskModal .close-modal');
+    const discardEditTaskBtn = document.querySelector('#editTaskModal .btn-discard');
+    const editTaskButtons = document.querySelectorAll('.btn-edit-task'); // Select all edit buttons
 
+    // Open Create Task Modal
+    if (createTaskBtn) {
+        createTaskBtn.addEventListener('click', function() {
+            taskModal.style.display = 'block';
+        });
+    }
 
+    // Open Create List Modal
+    if (createListBtn) {
+        createListBtn.addEventListener('click', function() {
+            listModal.style.display = 'block';
+        });
+    }
 
+    // Open Edit Task Modal with data
+    editTaskButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const taskId = this.getAttribute('data-task-id');
+            const taskItem = document.querySelector(`.task-item[data-task-id="${taskId}"]`);
 
+            if (taskItem) {
+                const taskTitle = taskItem.querySelector('.title').textContent;
+                const taskDescription = taskItem.querySelector('.description').textContent;
 
-// --------- List filtering functionality -----------
+                // Set modal input values
+                document.getElementById('editTaskTitle').value = taskTitle;
+                document.getElementById('editTaskDescription').value = taskDescription;
+                editTaskForm.action = `/task/${taskId}`; // Update the form action dynamically
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Get all radio buttons for lists
-    const listRadios = document.querySelectorAll('input[name="list"]');
-    const tasksContainer = document.getElementById('tasks-container');
-    
-    // Add event listener to each radio button
-    listRadios.forEach(radio => {
-        radio.addEventListener('change', function() {
-            const listId = this.value;
-            fetchTasks(listId);
+                editTaskModal.style.display = 'block';
+            }
         });
     });
-    
-    // Function to fetch tasks by list ID
-    function fetchTasks(listId) {
-        fetch(`/tasks/list/${listId}`)
-            .then(response => response.json())
-            .then(data => {
-                updateTasksDisplay(data.tasks);
-            })
-            .catch(error => {
-                console.error('Error fetching tasks:', error);
-            });
-            
+
+    // Close Task Modal function
+    function closeTaskModal() {
+        taskModal.style.display = 'none';
+        document.getElementById('createTaskForm').reset();
     }
-    
-    // Function to update the tasks display
-    function updateTasksDisplay(tasks) {
-        // Clear current tasks
-        tasksContainer.innerHTML = '';
-        
-        // If no tasks, show a message
-        if (tasks.length === 0) {
-            tasksContainer.innerHTML = '<p>No tasks in this list</p>';
-            return;
-        }
-        
-        // Create and append task items
-        tasks.forEach(task => {
-            const taskItem = createTaskItem(task);
-            tasksContainer.appendChild(taskItem);
-        });
+
+    // Close List Modal function
+    function closeListModal() {
+        listModal.style.display = 'none';
+        document.getElementById('createListForm').reset();
     }
-    
-    // Function to create a task item element
-    function createTaskItem(task) {
-        const taskItem = document.createElement('div');
-        taskItem.className = 'task-item';
-        taskItem.innerHTML = `
-        <div class="task-item" data-task-id="${task.id}">
-            <div class="checkbox-container">
-                <div class="custom-checkbox ${task.completed ? 'checked' : ''}" id="task-checkbox""></div>
-            </div>
-            
-            <div class="task-content">
-                <h1 class="title">${task.title}</h1>
-                <p class="description">${task.description}</p>
-            </div>
-            
-            <div class="actions">
-                <button class="btn btn-edit">Edit</button>
-                <button class="btn btn-delete">Delete</button>
-            </div>
-        </div>
-        `;
-        return taskItem;
+
+    // Close Edit Task Modal function
+    function closeEditTaskModal() {
+        editTaskModal.style.display = 'none';
+        editTaskForm.reset();
     }
+
+    // Close buttons event listeners
+    if (closeTaskBtn) closeTaskBtn.addEventListener('click', closeTaskModal);
+    if (discardTaskBtn) discardTaskBtn.addEventListener('click', closeTaskModal);
+    if (closeListBtn) closeListBtn.addEventListener('click', closeListModal);
+    if (discardListBtn) discardListBtn.addEventListener('click', closeListModal);
+    if (closeEditTaskBtn) closeEditTaskBtn.addEventListener('click', closeEditTaskModal);
+    if (discardEditTaskBtn) discardEditTaskBtn.addEventListener('click', closeEditTaskModal);
+
+    // Close modals when clicking outside
+    window.addEventListener('click', function(event) {
+        if (event.target === taskModal) closeTaskModal();
+        if (event.target === listModal) closeListModal();
+        if (event.target === editTaskModal) closeEditTaskModal();
+    });
 });
+
 
 
 
@@ -144,14 +100,14 @@ document.addEventListener('click', function(e) {
         const taskItem = checkbox.closest('.task-item');
         const content = taskItem.querySelector('.task-content');
         const taskId = taskItem.dataset.taskId;
-        
+
         // Toggle visual state
         checkbox.classList.toggle('checked');
         content.classList.toggle('checked-task');
-        
+
         // Get the new completed state (true if class is present)
         const isCompleted = checkbox.classList.contains('checked');
-        
+
         // Send AJAX request to update task status
         fetch(`/tasks/${taskId}`, {
             method: 'PATCH',
@@ -182,12 +138,9 @@ document.addEventListener('click', function(e) {
             console.error('Error updating task status:', error);
         });
     }
-    
-    // Handle edit buttons
-    if (e.target.closest('.btn-edit')) {
-        alert('Edit functionality would open here');
-    }
-    
+
+
+
     // Handle delete buttons
     if (e.target.closest('.btn-delete')) {
         const taskItem = e.target.closest('.task-item');

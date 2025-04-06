@@ -10,13 +10,12 @@
     <header class="app-header">
         <div class="header">
             <a href="/" class="logo">
-                <img src="images/logoipsum-327.svg" alt="Logo"/>
+                {{-- <img src="{{asset('images/logoipsum-327.svg')}}" alt="Logo"/> --}}
+                <h1>Task</h1>
             </a>
-            <h1>Task</h1>
         </div>
     </header>
         {{ $slot }}
-
         
     <script src="/js/app.js"></script>
 </body>

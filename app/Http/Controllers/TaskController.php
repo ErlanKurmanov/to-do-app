@@ -58,7 +58,7 @@ class TaskController extends Controller
      */
     public function edit(string $id)
     {
-        //
+
     }
 
     /**
@@ -81,6 +81,11 @@ class TaskController extends Controller
 
         // Handle other update fields if needed
 
+        $task->update([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+
         return response()->json([
             'success' => false,
             'message' => 'No changes were made'
@@ -92,7 +97,8 @@ class TaskController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Task::destroy($id);
+        return redirect()->back()->with('Deleted Successfully!');
     }
 
 }

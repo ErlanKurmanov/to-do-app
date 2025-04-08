@@ -1,271 +1,506 @@
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Instrument Sans', sans-serif;
+}
+
+body {
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header Styles */
+.app-header {
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
 .header {
-  display: flex;
-  align-items: center; /* aligns logo and text vertically in center */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
-
-body { 
-  margin: auto;
-  
-
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
 }
 
+.logo h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #3b82f6;
+    margin-left: 0.5rem;
+}
 
+/* Main Container */
 .app-container {
-  display: grid;
-  grid-template-columns: 25% 75%;
-  width: 100%;
+    display: flex;
+    max-width: 1400px;
+    margin: 2rem auto;
+    min-height: calc(100vh - 128px);
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
 }
 
+/* Sidebar Styles */
 .sidebar {
-  background: #f0f0f0;
-  padding: 20px;
-  grid-column: 1;
+    width: 280px;
+    background-color: #f8fafc;
+    border-right: 1px solid #e2e8f0;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
 }
 
-.content {
-  padding: 20px;
-  margin: auto;
-  width: 70%;
+.sidebar-actions {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
+.btn-create, .btn-create-list {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    text-align: center;
+}
 
-/* Buttons */
 .btn-create {
-  background-color: #41ae41;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  border-radius: 5px;
-  
-  display: block;
-  margin-bottom: 10px;
+    background-color: #3b82f6;
+    color: white;
+}
+
+.btn-create:hover {
+    background-color: #2563eb;
 }
 
 .btn-create-list {
-  background-color: #56af4c;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  border-radius: 5px;
-
-  display: block;
-  margin-bottom: 10px;
+    background-color: #f3f4f6;
+    color: #4b5563;
+    border: 1px solid #e5e7eb;
 }
 
+.btn-create-list:hover {
+    background-color: #e5e7eb;
+}
 
+.sidebar-lists {
+    flex-grow: 1;
+}
 
+.sidebar-lists h2 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
 
-                       /* Modal styles */
+.sidebar-lists ul {
+    list-style: none;
+}
+
+.list-item {
+    margin-bottom: 0.25rem;
+    border-radius: 6px;
+}
+
+.list-item a {
+    display: block;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: #4b5563;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+}
+
+.list-item:hover a {
+    background-color: #f1f5f9;
+}
+
+.list-item.active a {
+    background-color: #e0e7ff;
+    color: #4338ca;
+    font-weight: 500;
+}
+
+/* Content Area */
+.content {
+    flex-grow: 1;
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+/* Task Item */
+.task-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 1.25rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.checkbox-container {
+    margin-right: 1rem;
+    padding-top: 0.25rem;
+}
+
+.custom-checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #d1d5db;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.custom-checkbox.checked {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+}
+
+.custom-checkbox.checked::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.task-content {
+    flex-grow: 1;
+    margin-right: 1rem;
+}
+
+.task-content.checked-task {
+    opacity: 0.6;
+}
+
+.task-content.checked-task .title {
+    text-decoration: line-through;
+}
+
+.task-content .title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.task-content .description {
+    color: #6b7280;
+    font-size: 0.95rem;
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-edit-task, .btn-delete {
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border: none;
+}
+
+.btn-edit-task {
+    background-color: #f3f4f6;
+    color: #4b5563;
+    border: 1px solid #e5e7eb;
+}
+
+.btn-edit-task:hover {
+    background-color: #e5e7eb;
+}
+
+.btn-delete {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+.btn-delete:hover {
+    background-color: #fecaca;
+}
+
+/* Modal Styles */
 .modal {
-  display: none;
-  position: fixed;
-  z-index: 100;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: auto;
 }
 
 .modal-content {
-  background-color: #fff;
-  margin: 10% auto;
-  padding: 20px;
-  border-radius: 8px;
-  width: 80%;
-  max-width: 500px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    margin: 10% auto;
+    width: 500px;
+    max-width: 90%;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    animation: modalFadeIn 0.3s;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-header h2 {
+    font-size: 1.25rem;
+    color: #1f2937;
 }
 
 .close-modal {
-  font-size: 24px;
-  cursor: pointer;
+    font-size: 1.5rem;
+    color: #6b7280;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close-modal:hover {
+    color: #1f2937;
+}
+
+form {
+    padding: 1.5rem;
 }
 
 .form-group {
-  margin-bottom: 15px;
+    margin-bottom: 1.25rem;
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: 500;
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #4b5563;
+    margin-bottom: 0.5rem;
 }
 
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+.form-group input[type="text"],
+.form-group textarea,
+.task-list-dropdown select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: border 0.15s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus,
+.task-list-dropdown select:focus {
+    border-color: #3b82f6;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.task-list-dropdown {
+    margin-bottom: 1.5rem;
+}
+
+.task-list-dropdown label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #4b5563;
+    margin-bottom: 0.5rem;
+}
+
+.task-list-dropdown select {
+    background-color: #fff;
+    cursor: pointer;
 }
 
 .form-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 2rem;
 }
 
-.btn-save {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
+.btn-discard, .btn-save {
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border: none;
 }
 
 .btn-discard {
-  background-color: #f44336;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
+    background-color: #f3f4f6;
+    color: #4b5563;
+    border: 1px solid #e5e7eb;
+}
+
+.btn-discard:hover {
+    background-color: #e5e7eb;
+}
+
+.btn-save {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.btn-save:hover {
+    background-color: #2563eb;
+}
+
+/* Alert Messages */
+.alert {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    padding: 1rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    animation: alertFadeIn 0.3s, alertFadeOut 0.3s 3s forwards;
+}
+
+.alert-success {
+    background-color: #dcfce7;
+    color: #16a34a;
+    border-left: 4px solid #16a34a;
+}
+
+@keyframes alertFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes alertFadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+        margin: 1rem;
+    }
+
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 1rem;
+    }
+
+    .content {
+        padding: 1rem;
+    }
+
+    .modal-content {
+        width: 95%;
+        margin: 5% auto;
+    }
 }
 
 
+/* Target the list items within your sidebar lists */
+.sidebar-lists .list-item {
+    display: flex; /* Arrange children (<a> and <form>) in a row */
+    align-items: center; /* Vertically align the items in the middle */
+    justify-content: space-between; /* Push the link to the left and form/button to the right */
+    margin-bottom: 5px; /* Optional: Add some space below each list item */
+    padding: 5px 10px; /* Optional: Add some padding inside the list item */
+}
 
+/* Optional: Remove default margins from the form that might interfere */
+.sidebar-lists .list-item form {
+    margin: 0; /* Reset form margin */
+    /* display: inline; You might try this too, but flex on the parent is usually better */
+}
 
+/* Optional: Style the link and button for better appearance */
+.sidebar-lists .list-item .list-name {
+    text-decoration: none; /* Remove underline from link */
+    color: inherit; /* Use the default text color */
+    margin-right: 10px; /* Add some space between the name and the button if not using space-between */
+}
 
+.sidebar-lists .list-item .btn-delete {
+    padding: 2px 8px; /* Adjust button padding */
+    font-size: 0.9em; /* Make button text slightly smaller */
+    /* Add other button styles as needed */
+}
 
-                  /* Task items style */
-   
-    .main {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background-color: #f5f7fa;
-      padding: 20px;
-    }
-    
-    /* Task item styling */
-    .task-item {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      max-width: 600px;
-      padding: 16px;
-      background-color: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-      transition: all 0.2s ease;
-    }
-    
-    .task-item:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    }
-    
-    /* Checkbox styling */
-    .checkbox-container {
-      flex: 0 0 40px;
-      margin-right: 12px;
-    }
-    
-    .custom-checkbox {
-      position: relative;
-      display: block;
-      width: 20px;
-      height: 20px;
-      border: 2px solid #cbd5e0;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    
-    .custom-checkbox.checked {
-      background-color: #4299e1;
-      border-color: #4299e1;
-    }
-    
-    .custom-checkbox.checked::after {
-      content: "";
-      position: absolute;
-      top: 2px;
-      left: 6px;
-      width: 5px;
-      height: 10px;
-      border: solid white;
-      border-width: 0 2px 2px 0;
-      transform: rotate(45deg);
-    }
-    
-    /* Content styling */
-    .task-content {
-      flex: 1;
-      min-width: 0; /* Prevents overflow issues */
-    }
-    
-    .title {
-      font-size: 18px;
-      font-weight: 600;
-      color: #2d3748;
-      margin-bottom: 4px;
-      transition: text-decoration 0.2s ease;
-    }
-    
-    .checked-task .title {
-      text-decoration: line-through;
-      color: #a0aec0;
-    }
-    
-    .description {
-      font-size: 14px;
-      color: #4a5568;
-      line-height: 1.4;
-    }
-    
-    .checked-task .description {
-      color: #a0aec0;
-    }
-    
-    /* Actions styling */
-    .actions {
-      display: flex;
-      gap: 8px;
-      margin-left: 16px;
-    }
-    
-    .btn {
-      padding: 6px 12px;
-      border: none;
-      border-radius: 4px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    
-    .btn-edit {
-      background-color: #edf2f7;
-      color: #4a5568;
-    }
-    
-    .btn-edit:hover {
-      background-color: #e2e8f0;
-    }
-    
-    .btn-delete {
-      background-color: #fed7d7;
-      color: #e53e3e;
-    }
-    
-    .btn-delete:hover {
-      background-color: #feb2b2;
-    }
+/* Style for the active list item */
+.sidebar-lists .list-item.active {
+    background-color: #e0e0e0; /* Example background for active item */
+    border-radius: 4px; /* Example rounded corners */
+}

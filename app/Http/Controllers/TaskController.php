@@ -61,10 +61,7 @@ class TaskController extends Controller
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function isCompleted(Request $request, string $id)
     {
         $task = Task::find($id);
 
@@ -78,18 +75,26 @@ class TaskController extends Controller
                 'message' => 'Task status updated successfully!'
             ]);
         }
+    }
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        $task = Task::find($id);
+
 
         // Handle other update fields if needed
 
         $task->update([
             'title' => $request->title,
             'description' => $request->description,
+            'list_id' => $request->list_id,
         ]);
 
-        return response()->json([
-            'success' => false,
-            'message' => 'No changes were made'
-        ]);
+        return redirect()->back()->with('success', 'To-Do Created Successfully!');
+
+
     }
 
     /**

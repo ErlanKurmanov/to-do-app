@@ -58,4 +58,11 @@ class TaskListController extends Controller
             'currentList' => $currentList
         ]);
     }
+
+    public function destroy(string $id)
+    {
+        TaskList::destroy($id);
+        return redirect()->back()->with('Deleted Successfully!');
+
+    }
 }

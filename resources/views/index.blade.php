@@ -20,6 +20,12 @@
                             <a href="{{ route('list.show', $tasklist->id) }}" class="list-name">
                                 {{ $tasklist->name }}
                             </a>
+                            <form action="{{ route('list.destroy', $tasklist->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-delete">Delete</button>
+                            </form>
+
                         </li>
                     @endforeach
                 </ul>
@@ -27,12 +33,11 @@
 
         </aside>
 
-
         <!-- Tasks section -->
         <main class="content">
             <div id="tasks-container">
                 @foreach ($tasks as $task)
-                    <x-task-item :task="$task" />
+                    <x-task-item :$task :$tasklists />
                 @endforeach
             </div>
         </main>

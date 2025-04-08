@@ -1,4 +1,4 @@
-@props(['task'])
+@props(['task', 'tasklists'])
 <div class="task-item" data-task-id="{{ $task->id }}">
 
     <div class="checkbox-container">
@@ -15,6 +15,8 @@
 
 {{--         Deletes task--}}
         <form action="{{ route('tasks.destroy', [$task->id]) }}" method="POST">
+            @csrf
+            @method('DELETE')
             <button class="btn btn-delete">Delete</button>
         </form>
 
@@ -28,8 +30,9 @@
             <h2>Edit Task</h2>
             <span class="close-modal">&times;</span>
         </div>
-        <form action="{{route('task.update', [$task->id])}}" method="POST" id="editTaskForm">
+        <form action="{{route('task.isCompleted', [$task->id])}}" method="POST" id="editTaskForm">
             @csrf
+            @method("PUT")
             <div class="form-group">
                 <label for="editTaskTitle">Title</label>
                 <input type="text" id="editTaskTitle" name="title" required></input>
@@ -37,6 +40,14 @@
             <div class="form-group">
                 <label for="editTaskDescription">Description</label>
                 <textarea id="editTaskDescription" name="description" rows="4"></textarea>
+            </div>
+            <div class="task-list-dropdown">
+                <label for="taskList">Choose a category of task:</label>
+                <select name="list_id" required>
+                    @foreach($tasklists as $tasklist)
+                        <option value="{{ $tasklist->id }}"> {{ $tasklist->name }} </option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-actions">
                 <button type="button" class="btn-discard">Discard</button>

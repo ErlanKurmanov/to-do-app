@@ -8,10 +8,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class TaskList extends Model
 {
 
-    protected $table = 'lists';
     protected $fillable= ['name'];
 
-    public function task(): HasMany
+    public function tasks(): HasMany
     {
         return $this->hasMany(Task::class);
     }

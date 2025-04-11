@@ -18,11 +18,11 @@ class TaskListController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
         ]);
 
-        TaskList::create(['name' => $request->name]);
+        TaskList::create($validated);
 
         return redirect()->back()->with('success', 'Task list created successfully!');
     }

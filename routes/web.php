@@ -4,6 +4,10 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TaskListController;
 use Illuminate\Support\Facades\Route;
 
+//Retrieves all tasks and lists
+Route::get('/', [TaskListController::class, 'index']);
+
+
             // Operations with tasks:
 //Creates a new task:
 Route::post('/task', [TaskController::class, 'store'])->name('task.store');
@@ -24,13 +28,11 @@ Route::delete('tasks/{taskId}', [TaskController::class, 'destroy'])->name('tasks
 // Create a new list:
 Route::post('/lists', [TaskListController::class, 'store'])->name('lists.store');
 
-//Retrieves all tasks and lists
-Route::get('/', [TaskListController::class, 'index']);
-
 //Retrieves tasks depending on the list:
 Route::get('/list/{listId?}', [App\Http\Controllers\TaskListController::class, 'showList'])
     ->name('list.show');
 
+//Delete list
 Route::delete('/list/{id}', [TaskListController::class, 'destroy'])->name('list.destroy');
 
 

@@ -8,20 +8,7 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -34,32 +21,11 @@ class TaskController extends Controller
             'list_id' => 'required|exists:lists,id',
         ]);
 
-//        dd($validated);
-
-        Task::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'list_id' => $request->list_id,
-        ]);
+        Task::create($validated);
 
         return redirect()->back()->with('success', 'To-Do Created Successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-
-    }
 
     public function isCompleted(Request $request, string $id)
     {
@@ -82,10 +48,6 @@ class TaskController extends Controller
     public function update(Request $request, string $id)
     {
         $task = Task::find($id);
-
-
-        // Handle other update fields if needed
-
         $task->update([
             'title' => $request->title,
             'description' => $request->description,
